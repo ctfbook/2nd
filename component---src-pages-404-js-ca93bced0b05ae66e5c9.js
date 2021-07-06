@@ -1,0 +1,2 @@
+(self.webpackChunkctfbook2=self.webpackChunkctfbook2||[]).push([[883],{59616:function(t,n,u){"use strict";u.r(n),u.d(n,{default:function(){return c}});u(67294);var e=u(25444),o=u(61323),f=u(49035),l=u(23431);function c(){return(0,l.tZ)(o.Z,{title:"ページが存在しません"},(0,l.tZ)(f.Z,{title:"404: Not found"}),(0,l.tZ)("p",null,"そのページは存在しません。"),(0,l.tZ)("p",null,(0,l.tZ)(e.Link,{to:"/"},"トップページはこちら")))}}}]);
+//# sourceMappingURL=component---src-pages-404-js-ca93bced0b05ae66e5c9.js.map

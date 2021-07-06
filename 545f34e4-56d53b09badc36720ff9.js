@@ -1,0 +1,2 @@
+(self.webpackChunkctfbook2=self.webpackChunkctfbook2||[]).push([[980],{60782:function(t,n,c){"use strict";c.d(n,{vHB:function(){return v}});var u=c(51046);function v(t){return(0,u.w_)({tag:"svg",attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"}}]})(t)}}}]);
+//# sourceMappingURL=545f34e4-56d53b09badc36720ff9.js.map

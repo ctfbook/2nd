@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div>
+				<h1>Memo</h1>
+			</div>	
+			<a href="/add">Add a memo</a>
+
+			<div class="row">
+				<table id="table_memos">
+					<thead>
+						<tr>
+							<th>Title</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in memos %}
+						<tr>
+							<td><a href="/memo?key={{i.key}}">{{i.title}}</a></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+	</body>
+</html>

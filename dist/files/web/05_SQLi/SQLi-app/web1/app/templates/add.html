@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div>
+				<h1>Key-Value Store</h1>
+			</div>
+			<a href="/add">add kev-value pair</a>
+
+			{% if msg %}
+			<div>
+				<p style="color:red;">
+					{{msg}}
+				</p>
+			</div>
+			{% endif %}
+
+			<div class="row">
+				<form id="form" class="col s12" action="/add" method="POST">
+					<div class="row">
+						<div class="input-field col s5">
+							<input id="input_key" type="text" name="key" data-length="255" value="">
+							<label for="input_key">key</label>
+						</div>
+						<div class="input-field col s5">
+							<input id="input_value" type="text" name="value" value="">
+							<label for="input_value">value</label>
+						</div>
+
+						<div class="col s2">
+							<input class="btn" type="submit" value="submit">
+						</div>
+					
+					</div>
+			</div>
+				
+			</div>
+	</body>
+</html>

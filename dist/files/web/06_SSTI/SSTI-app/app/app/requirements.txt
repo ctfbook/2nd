@@ -1,0 +1,5 @@
+Flask==1.1.2
+Flask-MySQL==1.5.1
+mysqlclient==2.0.1
+pymysql[rsa]
+

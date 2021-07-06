@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Add a memo</h1>
+			<form method="POST" action="/add"> 
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="memo_title" type="text" name="title">
+						<label for="memo_title">Title</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<textarea id="memo_body" name="body" class="materialize-textarea"></textarea>
+						<label for="memo_body">Body</label>
+					</div>
+				</div>
+				<div class="row">
+					<input class="btn" type="submit" />
+				</div>
+			</form>			
+	</body>
+</html>

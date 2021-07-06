@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+
+		<div class="container">
+			<div>
+				<h1>Key-Value Store</h1>
+			</div>
+			<a href="/add">add kev-value pair</a>
+
+			<div>
+				<p id="msg" />
+			</div>
+
+			<div class="row">
+				<form id="form" class="col s12" action="/add" method="POST">
+					<div class="row">
+						<div class="input-field col s5">
+							<input id="input_key" type="text" name="key" data-length="255" value="">
+							<label for="input_key">key</label>
+							<span id="key_helper" class="helper-text" data-error="" data-success="right" />
+						</div>
+						<div class="input-field col s5">
+							<input id="input_value" type="text" name="value" value="">
+							<label for="input_value">value</label>
+						</div>
+
+						<div class="col s2">
+							<input class="btn" type="submit" value="submit">
+						</div>
+					
+					</div>
+			</div>
+				
+			</div>
+		<script>
+
+		 
+
+		 document.getElementById("input_key").addEventListener("keyup", checkKey, {passive:false});
+		 function checkKey(event) {
+			 const key = document.getElementById("input_key");
+			 
+			 if (key.value == "") {
+				 key.classList.remove("invalid");
+				 key.classList.remove("valid");
+				 return;
+			 }
+						 
+			 const param = new URLSearchParams({key: key.value});
+			 const url = "/keyCheck?" + param;
+			 
+			 fetch(url, {
+				 method: "GET"
+			 })
+			 .then(response => response.text())
+			 .then(data => {
+
+				 let key_helper = document.getElementById("key_helper");
+
+				 if (data == "used") {
+					 key_helper.setAttribute("data-error", "this key is already used");
+					 key.classList.add("invalid");
+				 } else if (data == "not used") {
+					 key_helper.setAttribute("data-success", "this key is available");
+					 key.classList.remove("invalid");
+					 key.classList.add("valid");
+				 } else {
+					 key_helper.setAttribute("data-error", "internal error occured during check");
+					 key.classList.add("invalid");
+				 }
+			 });
+		 };
+
+
+		</script>
+
+	</body>
+</html>

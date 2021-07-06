@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+
+  web1:
+    build: ./web1
+    restart: always
+    networks:
+      - app
+    ports:
+        - 5000:5000
+
+  web2:
+    build: ./web2
+    restart: always
+    networks:
+      - app
+    ports:
+        - 5001:5000
+
+
+  web3:
+    build: ./web3
+    restart: always
+    networks:
+      - app
+    ports:
+        - 5002:5000
+
+networks:
+  app:
+

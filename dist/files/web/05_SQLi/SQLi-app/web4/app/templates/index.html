@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div>
+				<h1>Key-Value Store</h1>
+			</div>
+			<div class="row">
+				<a href="/add">add kev-value pair</a>
+			</div>
+			<div class="row">
+				<form class="col s12" method="GET" action="/search">
+					<div class="row">
+						<div class="input-field col s6">
+							<input type="text" name="key" />
+							<label for="input_key">Search word</label>
+						</div>
+						<div class="input-field col s2">
+						<input class="btn" type="submit" value="Search"/>
+					</div>
+
+				</form>
+			</div>
+			
+			<div class="row">
+				<p>Number of results: {{ndata}}</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Key</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in data %}
+						<tr>
+							<td>{{i.0}}</td>
+							<td>{{i.1}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+	</body>
+</html>

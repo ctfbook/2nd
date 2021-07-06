@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  app:
+    build: ./app
+    restart: always
+    networks:
+      - app
+    ports:
+        - 5000:5000
+    environment:
+      - FLAG=flag{traversal_and_environ}
+
+networks:
+  app:
+

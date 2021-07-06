@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+
+		<script>
+		 function login() {
+			 const username = document.getElementById("username").value;
+			 const password = document.getElementById("password").value;
+			 
+			 const request = "<credential>" + 
+							 "<username>" + username + "</username>" +
+							 "<password>" + password + "</password>" +
+							 "</credential>";
+
+
+			 fetch("/login", {
+				 method: "POST",
+				 headers: {
+					 "Content-Type": "application/xml"
+				 },
+				 body: request
+    		 })
+				 .then(response => response.text())
+				 .then(data => {
+					 const parser = new DOMParser();
+					 const dom = parser.parseFromString(data, "application/xml");
+					 const success = dom.getElementsByTagName("success")[0].innerHTML;
+
+					 let msg = document.getElementById("msg");
+					 if (success === "false") {
+						 msg.style="color: red;";
+						 msg.innerHTML = "Failed to login"
+					 }
+				 });
+		 }
+		</script>
+
+		<div class="container"> 
+
+			<div class="row center-align">
+
+				<div class="col s12">
+				
+					<h1>Login to get FLAG :D (v2)</h1>
+					<div>
+						You cannot login now cuz it's under development :(
+					</div>
+					<div>
+						<p id="msg" />
+					</div>
+					<form class="center-align" onsubmit="login(); return false;">
+						<div class="row">
+							<div class="input-field col s8 offset-s2">
+								<input id="username" type="text" />
+								<label for="username">Username</label>
+								
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s8 offset-s2">
+								<input id="password" type="password" />
+								<label for="password">Password</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="row center">
+								<input class="btn" type="submit" />
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>add template</h1>
+			<div clas="row">
+				<form id="form" class="col s12" action="/add" method="POST">
+					<div class="row">
+						<div class="input-field col s6">
+							<input id="input_body" type="text" name="name" data-length="20" value="">
+							<label for="input_body">name</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s8">
+							<textarea id="input_txtarea" class="materialize-textarea" rows="10" name="template"></textarea>
+							<label for="input_txtarea">template</label>
+						</div>
+					</div>
+					<input type="submit" value="submit">
+				</form>
+			</div>
+		</div>
+	</body>
+
+	</html>

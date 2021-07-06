@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:latest
+
+  client:
+    build: ./
+    entrypoint: curl -s nginx:80
+    depends_on:
+      - nginx

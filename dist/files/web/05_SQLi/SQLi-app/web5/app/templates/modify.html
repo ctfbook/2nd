@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div>
+				<h1>Key-Value Store</h1>
+			</div>
+
+			<div class="row">
+				<form id="form" class="col s12" action="/modify" method="POST">
+					<div class="row">
+						<input id="input_id" type="hidden" name="id" value="{{data.0}}">
+						<div class="input-field col s5">
+							<input id="input_key" type="text" name="key" data-length="255" value="{{data.1}}">
+							<label for="input_key">name</label>
+						</div>
+						<div class="input-field col s5">
+							<input id="input_value" type="text" name="value" value="{{data.2}}">
+							<label for="input_value">name</label>
+						</div>
+
+						<div class="col s2">
+							<input class="btn" type="submit" value="modifyo">
+						</div>
+					
+					</div>
+			</div>
+				
+			</div>
+	</body>
+</html>

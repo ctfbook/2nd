@@ -1,0 +1,14 @@
+# Sidebar navigation
+
+- label: "トップページ"
+  link: "/"
+- label: 書籍に関して
+  items:
+    - label: "配布ファイル"
+      link: "/about-dist"
+    - label: "よくある質問と回答"
+      link: "/faq"
+- label: その他
+  items:
+    - label: "GitHub"
+      link: https://github.com/ctfbook/2nd

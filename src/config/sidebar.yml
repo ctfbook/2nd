@@ -4,11 +4,19 @@
   link: "/"
 - label: 書籍に関して
   items:
+    - label: "書誌情報"
+      link: "/about"
     - label: "配布ファイル"
       link: "/about-dist"
     - label: "よくある質問と回答"
       link: "/faq"
 - label: その他
   items:
+    - label: "マイナビ出版のサポートページ（正誤情報など）"
+      link: https://book.mynavi.jp/supportsite/detail/9784839973490.html
+    - label: "マイナビ出版の商品ページ"
+      link: https://book.mynavi.jp/ec/products/detail/id=122750
+    - label: "Amazon の商品ページ"
+      link: https://www.amazon.co.jp/dp/4839973490
     - label: "GitHub"
       link: https://github.com/ctfbook/2nd

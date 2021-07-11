@@ -2,109 +2,109 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu20.04"
-  config.vm.box_url = "http://cloud-images-archive.ubuntu.com/releases/focal/release-20200720/ubuntu-20.04-server-cloudimg-amd64-vagrant.box"
-  config.vm.provider "virtualbox" do |vb|
-    # Display the VirtualBox GUI when booting the machine
-    vb.gui = !ARGV.include?("--provision")
-    # Customize the amount of memory on the VM:
-    vb.memory = "2048"
-    vb.customize [
-                   "modifyvm", :id,
-                   "--vram", "256",
-                   "--clipboard", "bidirectional",
-                   "--accelerate3d", "on",
-                   "--hwvirtex", "on",
-                   "--nestedpaging", "on",
-                   "--largepages", "on",
-                   "--ioapic", "on",
-                   "--pae", "on",
-                   "--uartmode1", "file", File::NULL,
-                 ]
+    config.vm.box = "ubuntu20.04"
+    config.vm.box_url = "http://cloud-images-archive.ubuntu.com/releases/focal/release-20200720/ubuntu-20.04-server-cloudimg-amd64-vagrant.box"
+    config.vm.provider "virtualbox" do |vb|
+      # Display the VirtualBox GUI when booting the machine
+      vb.gui = !ARGV.include?("--provision")
+      # Customize the amount of memory on the VM:
+      vb.memory = "2048"
+      vb.customize [
+                     "modifyvm", :id,
+                     "--vram", "256",
+                     "--clipboard", "bidirectional",
+                     "--accelerate3d", "on",
+                     "--hwvirtex", "on",
+                     "--nestedpaging", "on",
+                     "--largepages", "on",
+                     "--ioapic", "on",
+                     "--pae", "on",
+                     "--uartmode1", "file", File::NULL,
+                   ]
+    end
+
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+
+    config.vm.provision :root_user, type: "shell", inline: <<-ROOT_SHELL
+        # set up basic configurations
+        timedatectl set-timezone Asia/Tokyo
+
+        # set up apt settings
+        echo 'apt_preserve_sources_list: true' | tee /etc/cloud/cloud.cfg
+        sed -i -r 's!(deb|deb-src) http://archive.ubuntu.com/ubuntu/!\\1 mirror://mirrors.ubuntu.com/mirrors.txt!' /etc/apt/sources.list
+        sed -i 's/1/0/' /etc/apt/apt.conf.d/20auto-upgrades
+        apt-mark hold libc6
+        apt update -y
+
+        # install common utilities
+        apt install -y socat libc-dev-bin=2.31-0ubuntu9 libc6-dev=2.31-0ubuntu9 libc6-dbg=2.31-0ubuntu9 build-essential gdb curl
+        apt install -y python3-dev python3-pip libffi-dev python-is-python3 ruby ruby-bundler ruby-dev rubygems
+
+        # install desktop environment
+        apt install -y ubuntu-desktop-minimal
+
+        # set up Japanese environment
+        locale-gen ja_JP.UTF-8
+        localectl set-locale LANG=ja_JP.UTF-8
+        apt install -y ibus-mozc
+
+        # install docker-related tools
+        apt install -y apt-transport-https ca-certificates gnupg lsb-release
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+            $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        apt update -y
+        apt install -y docker-ce docker-ce-cli containerd.io
+        curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+        gpasswd -a vagrant docker
+
+        # install utilities for crypto
+        apt install -y sagemath pari-gp
+        pip install pycryptodome
+
+        # install utilities for reversing
+        apt install -y z3
+        pip install angr z3-solver
+
+        # install utilities for web
+        apt install -y php
+        pip install flask requests lxml
+        curl -L "https://portswigger.net/burp/releases/download?product=community&version=2021.6.2&type=Linux" -o /tmp/burp-installer.sh
+        bash /tmp/burp-installer.sh <<-BURP
+			o
+
+			y
+
+		BURP
+
+        # install utilities for pwnable
+        apt install -y nasm
+        pip install pwntools
+        gem install seccomp-tools one_gadget
+	ROOT_SHELL
+
+    config.vm.provision :vagrant_user, privileged: false, type: "shell", inline: <<-USER_SHELL
+        # set Japanese input-source
+        gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'jp')]"    # ('ibus', 'mozc-jp') is added automatically
+
+        # install utilities for pwnable
+        [ -e /home/vagrant/bin ] || mkdir /home/vagrant/bin
+        [ -e /home/vagrant/bin/rp++ ] || wget https://github.com/downloads/0vercl0k/rp/rp-lin-x64 -O /home/vagrant/bin/rp++
+        chmod +x /home/vagrant/bin/rp++
+        [ -e /home/vagrant/peda ] || git clone https://github.com/longld/peda.git /home/vagrant/peda
+        [ -e /home/vagrant/Pwngdb ] || git clone https://github.com/scwuaptx/Pwngdb.git /home/vagrant/Pwngdb
+        cp /home/vagrant/Pwngdb/.gdbinit /home/vagrant
+
+        # download files
+        [ -e /home/vagrant/files ] || ( wget https://ctfbook.github.io/2nd/dist/files.tar.gz -q -O /tmp/files.tar.gz && tar xzvf /tmp/files.tar.gz -C /home/vagrant )
+
+        # finalize
+        LANG=C xdg-user-dirs-update --force
+        echo 'export PATH=$PATH:/home/vagrant/bin' >> /home/vagrant/.bashrc
+	USER_SHELL
+
+    if Vagrant.has_plugin?("vagrant-vbguest")
+        config.vbguest.auto_update = false
+    end
   end
-
-  config.vm.synced_folder ".", "/vagrant", disabled: true
-
-  config.vm.provision :root_user, type: "shell", inline: <<-ROOTSHELL
-      # set up basic configurations
-      timedatectl set-timezone Asia/Tokyo
-
-      # set up apt settings
-      echo 'apt_preserve_sources_list: true' | tee /etc/cloud/cloud.cfg
-      sed -i -r 's!(deb|deb-src) http://archive.ubuntu.com/ubuntu/!\\1 mirror://mirrors.ubuntu.com/mirrors.txt!' /etc/apt/sources.list
-      sed -i 's/1/0/' /etc/apt/apt.conf.d/20auto-upgrades
-      apt-mark hold libc6
-      apt update -y
-
-      # install common utilities
-      apt install -y socat libc-dev-bin=2.31-0ubuntu9 libc6-dev=2.31-0ubuntu9 libc6-dbg=2.31-0ubuntu9 build-essential gdb curl
-      apt install -y python3-dev python3-pip libffi-dev python-is-python3 ruby ruby-bundler ruby-dev rubygems
-
-      # install desktop environment
-      apt install -y ubuntu-desktop-minimal
-
-      # set up Japanese environment
-      locale-gen ja_JP.UTF-8
-      localectl set-locale LANG=ja_JP.UTF-8
-      apt install -y ibus-mozc
-
-      # install docker-related tools
-      apt install -y apt-transport-https ca-certificates gnupg lsb-release
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-      echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-          $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      apt update -y
-      apt install -y docker-ce docker-ce-cli containerd.io
-      curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-      chmod +x /usr/local/bin/docker-compose
-      gpasswd -a vagrant docker
-
-      # install utilities for crypto
-      apt install -y sagemath pari-gp
-      pip install pycryptodome
-
-      # install utilities for reversing
-      apt install -y z3
-      pip install angr z3-solver
-
-      # install utilities for web
-      apt install -y php
-      pip install flask requests lxml
-      curl -L "https://portswigger.net/burp/releases/download?product=community&version=2021.6.2&type=Linux" -o /tmp/burp-installer.sh
-      bash /tmp/burp-installer.sh <<-BURP
-        o
-
-        y
-
-      BURP
-
-      # install utilities for pwnable
-      apt install -y nasm
-      pip install pwntools
-      gem install seccomp-tools one_gadget
-  ROOTSHELL
-
-  config.vm.provision :vagrant_user, privileged: false, type: "shell", inline: <<-USERSHELL
-      # set Japanese input-source
-      gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'jp')]"    # ('ibus', 'mozc-jp') is added automatically
-
-      # install utilities for pwnable
-      [ -e /home/vagrant/bin ] || mkdir /home/vagrant/bin
-      [ -e /home/vagrant/bin/rp++ ] || wget https://github.com/downloads/0vercl0k/rp/rp-lin-x64 -O /home/vagrant/bin/rp++
-      chmod +x /home/vagrant/bin/rp++
-      [ -e /home/vagrant/peda ] || git clone https://github.com/longld/peda.git /home/vagrant/peda
-      [ -e /home/vagrant/Pwngdb ] || git clone https://github.com/scwuaptx/Pwngdb.git /home/vagrant/Pwngdb
-      cp /home/vagrant/Pwngdb/.gdbinit /home/vagrant
-
-      # download files
-      [ -e /home/vagrant/files ] || ( wget https://ctfbook.github.io/2nd/dist/files.tar.gz -q -O /tmp/files.tar.gz && tar xzvf /tmp/files.tar.gz -C /home/vagrant )
-
-      # finalize
-      LANG=C xdg-user-dirs-update --force
-      echo 'export PATH=$PATH:/home/vagrant/bin' >> /home/vagrant/.bashrc
-  USERSHELL
-
-  if Vagrant.has_plugin?("vagrant-vbguest")
-      config.vbguest.auto_update = false
-  end
-end

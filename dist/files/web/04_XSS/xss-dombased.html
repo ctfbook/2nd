@@ -1,0 +1,5 @@
+<p id="greeting"></p>
+<script>
+const name = decodeURIComponent(window.location.search.substr(1))
+document.getElementById('greeting').innerHTML = `Hello, ${name || 'unknown'}`
+</script>

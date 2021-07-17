@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DOM Programming</title>
+  </head>
+  <body>
+    <h1 id="heading">Hello, DOM!</h1>
+    <p id="paragraph">これは段落を表す要素です。</p>
+    <div id="division"></div>
+  </body>
+  <script>
+  // document.getElementByIdを用いた要素の取得
+  const h1 = document.getElementById('heading')
+  console.log(h1.innerText)
+  // => Hello, DOM!
+
+  const p = document.getElementById('paragraph')
+  p.innerText = 'テキストを上書きします'
+
+  const div = document.getElementById('division')
+  div.innerHTML = '<h2>サブタイトルです</h2>'
+  </script>
+</html>

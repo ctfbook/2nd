@@ -1,0 +1,21 @@
+<html>
+...
+<body>
+
+<!-- 天候情報を表示するためのセクション -->
+<div id="weather-info">
+</div>
+
+<script>
+const weatherInfoDiv = document.getElementById('weather-info')
+fetch('http://weather.example.com')
+  .then(response => {
+    if (response.ok) {
+      // 取得した天候情報をHTMLに埋め込む
+      weatherInfoDiv.innerText = response.text()
+    }
+  })
+</script>
+
+</body>
+</html>

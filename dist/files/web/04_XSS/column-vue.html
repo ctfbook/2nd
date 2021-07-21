@@ -1,0 +1,17 @@
+<div id="app">
+  <p>Count: {{ count }}</p>
+  <button @click="countUp">Count Up</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+const app = new Vue({
+  el: '#app',
+  data() {
+    return { count: 0 }
+  },
+  methods: {
+    countUp() { this.count++ }
+  }
+})
+</script>

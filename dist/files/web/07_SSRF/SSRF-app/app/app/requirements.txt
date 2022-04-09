@@ -1,4 +1,18 @@
-Flask==1.1.2
-redis
-pycurl
+async-timeout==4.0.2
+click==8.1.2
+dbus-python==1.2.16
+Deprecated==1.2.13
+Flask==2.1.1
+importlib-metadata==4.11.3
+itsdangerous==2.1.2
+Jinja2==3.1.1
+MarkupSafe==2.1.1
+packaging==21.3
+pycurl==7.45.1
+pyparsing==3.0.7
+redis==4.2.2
+supervisor==4.1.0
+Werkzeug==2.1.1
+wrapt==1.14.0
+zipp==3.8.0
 

@@ -1,4 +1,13 @@
-Flask==1.1.2
-Flask-MySQL==1.5.1
-mysqlclient==2.0.1
-pymysql[rsa]
+cffi==1.15.0
+click==8.1.2
+cryptography==36.0.2
+Flask==2.1.1
+importlib-metadata==4.11.3
+itsdangerous==2.1.2
+Jinja2==3.1.1
+MarkupSafe==2.1.1
+pycparser==2.21
+pymysql[rsa]==1.0.2
+Werkzeug==2.1.1
+zipp==3.8.0
+

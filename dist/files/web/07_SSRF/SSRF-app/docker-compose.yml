@@ -15,7 +15,7 @@ services:
       - FLAG="flag{This_is_a_simple_SSRF}"
 
   redis:
-    image: "redis:latest"
+    image: "redis:6.2"
     networks:
       - app
 

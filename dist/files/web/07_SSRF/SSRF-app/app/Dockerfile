@@ -1,4 +1,4 @@
-FROM selenium/standalone-chrome
+FROM selenium/standalone-chrome:100.0
 
 USER root
 ADD ./app /opt/app
